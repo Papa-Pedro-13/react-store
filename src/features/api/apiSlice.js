@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { BASE_URL } from "../../utils/constants"
+import { buildUrl } from "../../utils/common"
 
 //A way to get data that is different from axios. Redux toolit
 export const apiSlice = createApi({
@@ -9,7 +10,10 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getProduct: builder.query({
       query: ({ id }) => `/products/${id}`
+    }),
+    getProducts: builder.query({
+      query: (params) => buildUrl('/products', params)
     })
   })
 })
-export const { useGetProductQuery } = apiSlice
+export const { useGetProductQuery, useGetProductsQuery } = apiSlice

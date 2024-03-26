@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styles from '../../styles/Header.module.css';
 
@@ -9,12 +9,18 @@ import AVATAR from '../../images/avatar.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleForm } from '../../features/user/userSlice';
 import { useEffect, useState } from 'react';
+import { useGetProductsQuery } from '../../features/api/apiSlice';
 
 const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { currentUser } = useSelector(({ user }) => user);
 
   const [values, setValues] = useState({ name: 'Guest', avatar: AVATAR });
+  const [searchValue, setSearchValue] = useState('');
+
+  const { data, isLoading } = useGetProductsQuery({ title: searchValue });
 
   useEffect(() => {
     if (!currentUser) return;
@@ -25,7 +31,13 @@ const Header = () => {
   const handleClick = () => {
     if (!currentUser) {
       dispatch(toggleForm(true));
+    } else {
+      navigate(ROUTES.PROFILE);
     }
+  };
+
+  const handleSearch = ({ target: { value } }) => {
+    setSearchValue(value);
   };
 
   return (
@@ -63,11 +75,32 @@ const Header = () => {
             name='search'
             placeholder='Search...'
             autoComplete='off'
-            onChange={() => {}}
-            value={''}
+            onChange={handleSearch}
+            value={searchValue}
           />
         </div>
-        <div className={styles.box}></div>
+        {searchValue && (
+          <div className={styles.box}>
+            {isLoading
+              ? 'Loading'
+              : !data.length
+              ? 'No results'
+              : data.map(({ title, images, id }) => (
+                  <Link
+                    to={`/products/${id}`}
+                    key={id}
+                    onClick={() => setSearchValue('')}
+                    className={styles.item}
+                  >
+                    <div
+                      className={styles.image}
+                      style={{ backgroundImage: `url(${images[0]})` }}
+                    ></div>
+                    <div className={styles.title}>{title}</div>
+                  </Link>
+                ))}
+          </div>
+        )}
       </form>
       <div className={styles.account}>
         <Link

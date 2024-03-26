@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import stylesProf from '../../styles/Profile.module.css';
 import styles from '../../styles/User.module.css';
 import { useDispatch, useSelector } from 'react-redux';
