@@ -1,8 +1,13 @@
-# React + Vite
+# React-store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный проект интернет-магазина.
 
-Currently, two official plugins are available:
+<h2><b>Стек frontend технологий:</b> React, Javascript, RTK Query, Redux, CSS.</h2>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<details><summary><b>Инструкция по запуску:</b></summary>
+```
+npm install
+npm run start
+```
+</details>
+
